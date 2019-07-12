@@ -25,6 +25,12 @@ gem 'jbuilder', '~> 2.5'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
+# Use DelayedJob for our background projection and email processing (local db storage/ActiveRecord)
+gem 'delayed_job_active_record', '~> 4'
+# Use Wisper for PubSub Event Processing, with async support (using delayed_job)
+gem 'wisper', '~> 2'
+gem 'wisper-activejob', '~> 1'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
