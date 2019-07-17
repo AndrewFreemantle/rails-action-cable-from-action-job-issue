@@ -1,24 +1,28 @@
-# README
+# Scenario
+Single Page Application uses ActionCable to receive update messages segregated by authenticated User using `stream_for`.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+If the updated message is broadcasted from an ActionJob, this works using the `:async` development ActionJob queue_adaptor, but doesn't appear to work with any delayed or perform later queue adaptor.
 
-Things you may want to cover:
 
-* Ruby version
 
-* System dependencies
+# Steps to reproduce
 
-* Configuration
+1. Clone this repo
+1. `$ bundle install`
+1. `$ rails webpacker:install`
+1. `$ rails db:migrate`
+1. `$ rails db:seed`
+1. `$ rails server`
+1. Open [http://localhost:3000](http://localhost:3000), open the developer tools > network > web sockets and select 'cable'
+1. Reload the page, and inspect the output:
 
-* Database creation
+![image](https://raw.githubusercontent.com/AndrewFreemantle/rails-action-cable-from-action-job-issue/delayed-job-adaptor-fails/dev-tools-image-one-message-bad.png)
 
-* Database initialization
+We're expecting two messages, one sent immediately and one sent via `perform_later` which doesn't arrive.
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+# Desired outcome
 
-* Deployment instructions
+The delayed ActiveJob should be able to broadcast via ActionCable - the output is expected to look like this:
 
-* ...
+![image](https://raw.githubusercontent.com/AndrewFreemantle/rails-action-cable-from-action-job-issue/delayed-job-adaptor-fails/dev-tools-image-two-messages-good.png)
