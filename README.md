@@ -4,6 +4,9 @@ Single Page Application uses ActionCable to receive update messages segregated b
 If the updated message is broadcasted from an ActionJob, this works using the `:async` development ActionJob queue_adaptor, but doesn't appear to work with any delayed or perform later queue adaptor.
 
 
+**NOTE: This is the working `:async` development ActionJob queue_adaptor branch. Please refer to the [`delayed-job-adaptor-fails` branch](https://github.com/AndrewFreemantle/rails-action-cable-from-action-job-issue) to reproduce the issue**
+
+
 # Navigating the code
 The ActionJob is triggered in `app/channels/web_notifications_channel.rb`:
 
@@ -33,14 +36,5 @@ end
 1. `$ rails server`
 1. Open [http://localhost:3000](http://localhost:3000), open the developer tools > network > web sockets and select 'cable'
 1. Reload the page, and inspect the output:
-
-![image](https://raw.githubusercontent.com/AndrewFreemantle/rails-action-cable-from-action-job-issue/delayed-job-adaptor-fails/dev-tools-image-one-message-bad.png)
-
-We're expecting two messages, one sent immediately and one sent via `perform_later` which doesn't arrive.
-
-
-# Desired outcome
-
-The delayed ActiveJob should be able to broadcast via ActionCable - the output is expected to look like this:
 
 ![image](https://raw.githubusercontent.com/AndrewFreemantle/rails-action-cable-from-action-job-issue/delayed-job-adaptor-fails/dev-tools-image-two-messages-good.png)
