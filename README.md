@@ -4,8 +4,26 @@ Single Page Application uses ActionCable to receive update messages segregated b
 If the updated message is broadcasted from an ActionJob, this works using the `:async` development ActionJob queue_adaptor, but doesn't appear to work with any delayed or perform later queue adaptor.
 
 
+# Navigating the code
+The ActionJob is triggered in `app/channels/web_notifications_channel.rb`:
 
-# Steps to reproduce
+``` ruby
+class WebNotificationsChannel < ApplicationCable::Channel
+  def subscribed
+    logger.debug '> in WebNotificationsChannel.subscribed'
+    stream_for current_user
+
+    WebNotifyJob.perform_now('perform_now at WebNotificationsChannel.subscribed')
+    WebNotifyJob.perform_later('perform_later at WebNotificationsChannel.subscribed')
+  end
+
+  def unsubscribed
+    # Any cleanup needed when channel is unsubscribed
+  end
+end
+```
+
+# Steps to run / reproduce
 
 1. Clone this repo
 1. `$ bundle install`
