@@ -31,6 +31,7 @@ end
 1. `$ rails db:migrate`
 1. `$ rails db:seed`
 1. `$ rails server`
+1. `$ rails jobs:work`
 1. Open [http://localhost:3000](http://localhost:3000), open the developer tools > network > web sockets and select 'cable'
 1. Reload the page, and inspect the output:
 
