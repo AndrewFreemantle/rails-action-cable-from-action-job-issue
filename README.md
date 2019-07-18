@@ -3,6 +3,8 @@ Single Page Application uses ActionCable to receive update messages segregated b
 
 If the updated message is broadcasted from an ActionJob, this works using the `:async` development ActionJob queue_adaptor, but doesn't appear to work with any delayed or perform later queue adaptor.
 
+# Fix
+This branch fixes the issue by configuring the ActionCable adaptor to use Redis. See `config/cable.yml`
 
 # Navigating the code
 The ActionJob is triggered in `app/channels/web_notifications_channel.rb`:
